@@ -5,6 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+//import api from '../utils/Api'
 
 
 function App() {
@@ -27,6 +28,12 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
     
   return (
     
@@ -37,6 +44,7 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
+        
         />
 
         <Footer />
@@ -46,7 +54,7 @@ function App() {
         title='Редактировать профиль'
         buttonText='Сохранить'
         isOpen={isEditProfilePopupOpen}
-        
+        onClose={closeAllPopups}
         />
 
         <PopupWithForm
@@ -54,6 +62,7 @@ function App() {
         title='Новое место'
         buttonText='Создать'
         isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
         
         />
 
@@ -62,7 +71,7 @@ function App() {
         title='Обновить аватар'
         buttonText='Сохранить'
         isOpen={isEditAvatarPopupOpen}
-        
+        onClose={closeAllPopups}
         />
 
         

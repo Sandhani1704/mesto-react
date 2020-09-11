@@ -1,12 +1,12 @@
 import React from 'react';
 
-function PopupWithForm({ name, title, buttonText, children, isOpen }) {
+function PopupWithForm({ name, title, buttonText, children, isOpen, onClose }) {
     return (
 
-    <section className={`popup {name} ${isOpen && 'popup_opened'}`}> 
+    <section className={`popup ${name} ${isOpen && 'popup_opened'}`}> 
         <div className="popup__overlay popup-profile__overlay"></div>
         <div className="popup__container">
-            <button type="button" className="popup__close"><img className="popup__close-icon" src="./images/Close_Icon.svg" alt="закрыть" /></button>
+            <button type="button" className="popup__close" onClick = {onClose}><img className="popup__close-icon" src="./images/Close_Icon.svg" alt="закрыть" /></button>
             <h3 className="popup__title">{title}</h3>
             <form className={`popup__form popup__form_${name}`} name={name} noValidate>
             {children}
