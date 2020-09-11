@@ -1,0 +1,7 @@
+.elements__card {
+    width: 282px;
+    min-height: 360px;
+    border-radius: 10px;
+    background: #2A2C2F;
+    position: relative;
+    }

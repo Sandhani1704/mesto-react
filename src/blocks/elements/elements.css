@@ -1,0 +1,34 @@
+@import url(./__card-description/elements__card-description.css);
+@import url(./__card-icon/elements__card-icon.css);
+@import url(./__card-image/elements__card-image.css);
+@import url(./__card-name/elements__card-name.css);
+@import url(./__card/elements__card.css);
+@import url(./__remove-button/elements__remove-button.css);
+@import url(./__remove-button/_visible/elements__remove-button_visible.css);
+@import url(./__remove-button/_hidden/elements__remove-button_hidden.css);
+@import url(./__card-icon/elements__card-icon.css);
+@import url(./__card-icon/_active/elements__card-icon_active.css);
+@import url(./__like-count/elements__like-count.css);
+
+.elements {
+    display: grid;
+    max-width: 882px;
+    margin: 50px auto 0;
+    grid-template-columns: repeat(auto-fit, 282px);
+    grid-gap: 20px 18px;
+    box-sizing: border-box;
+    }
+    
+    
+    @media screen and (max-width: 970px) {
+    .elements {
+    margin: 0 auto;
+    max-width: 582px;
+    }
+    } 
+    
+    @media screen and (max-width: 685px) {
+        .elements {
+        max-width: 282px;
+    }
+    } 

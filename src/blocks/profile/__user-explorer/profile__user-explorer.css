@@ -1,0 +1,24 @@
+.profile__user-explorer {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-bottom: 0px;
+    width: 100%;
+    }
+    
+    @media screen and (max-width: 970px) {
+        .profile__user-explorer {
+    margin: 0 auto;
+    text-align: center;
+    }
+    }
+    
+    @media screen and (max-width: 380px) {
+    .profile__user-explorer {
+    font-size: 14px;
+    line-height: 17px;
+    }
+    } 

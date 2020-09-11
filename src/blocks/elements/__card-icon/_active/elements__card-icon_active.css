@@ -1,0 +1,5 @@
+.elements__card-icon_active {
+    background: url(../../../../images/like-button_active.svg);
+    outline: none;
+    border: none;
+}
