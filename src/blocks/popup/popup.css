@@ -7,7 +7,7 @@
 @import url(./__input/_type/popup__input_type_job.css);
 @import url(./__input/_type/popup__input_type_name.css);
 @import url(./__input/_type/popup__input_type_error.css);
-@import url(./_opened/popup_opened.css);
+/*@import url(./_opened/popup_opened.css);*/
 @import url(./__title/popup__title.css);
 @import url(./__overlay/popup__overlay.css);
 @import url(./__input-error/popup__input-error.css);

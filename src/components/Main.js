@@ -49,14 +49,16 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
                 <button onClick={onAddPlace} type="button" className="profile__button-add"><img className="profile__button-vector" src={VectorButtonAdd} alt="Добавить" /></button>
             </section>
 
+
+
+
             <section className="elements">
 
 
-                <div id="element">
+                {cards.map((card) => (
+                    <>
 
-
-                    {cards.map((card) => (
-                        <>
+                        <div id="element">
                             <div className="elements__card">
                                 <button type="button" className="elements__remove-button"></button>
                                 <img src={card.link} alt={card.name} className="elements__card-image" key={card._id} />
@@ -69,16 +71,11 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
                                     </div>
                                 </div>
                             </div>
-                        </>
+                        </div>
 
+                    </>
+                ))}
 
-
-                    ))}
-
-
-
-
-                </div>
             </section>
 
 
