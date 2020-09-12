@@ -1,14 +1,16 @@
 import React from 'react';
+import closeIcon from '../images/Close_Icon.svg';
 
-function ImagePopup() {
+function ImagePopup({ isOpen, onClose, card }) {
+  
   return (
 
-    <section className="popup popup-image">
+    <section className={`popup popup-image ${isOpen && 'popup_opened'}`} >
       <div className="popup__overlay popup-image__overlay"></div>
       <div className="popup-image__cover">
-        <img src="#" alt="изображение места" className="popup-image__image" />
-        <p className="popup-image__caption"></p>
-        <button type="button" className="popup__close popup-image__close-button"><img className="popup__close-icon" src="./images/Close_Icon.svg" alt="закрыть" /></button>
+        <img src={ card.link } alt={card.name} className="popup-image__image" />
+        <p className="popup-image__caption">{card.name}</p>
+        <button onClick={onClose} type="button" className="popup__close popup-image__close-button"><img className="popup__close-icon" src={closeIcon} alt="закрыть" /></button>
       </div>
     </section>
 

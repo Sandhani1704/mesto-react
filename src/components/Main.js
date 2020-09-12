@@ -1,13 +1,10 @@
 import React from 'react';
 import { api } from '../utils/Api';
-//import Card from './Card';
-//import avatarPic from '../images/image.png';
+import Card from './Card';
 import VectorButton from '../images/Vector_1.png';
 import VectorButtonAdd from '../images/Vector.png';
 
-
-
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
 
     const [userName, setUserName] = React.useState('');
     const [userDescription, setUserDescription] = React.useState('');
@@ -23,10 +20,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
                 setUserAvatar(userInfo.avatar);
                 setCards(initialCards);
             })
-            .catch((error) => console.log('Ошибка запроса -> ' + error))
-        /*.finally(() => {
-          setIsHidden(false);
-        }); */
+            .catch((error) => console.log('Ошибка запроса - ' + error))
+
     }, []);
 
     return (
@@ -49,41 +44,21 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
                 <button onClick={onAddPlace} type="button" className="profile__button-add"><img className="profile__button-vector" src={VectorButtonAdd} alt="Добавить" /></button>
             </section>
 
-
-
-
             <section className="elements">
 
-
                 {cards.map((card) => (
-                    <>
+                    <Card key={card._id}
+                        onCardClick={onCardClick}
+                        card={card}
+                    />
 
-                        <div id="element">
-                            <div className="elements__card">
-                                <button type="button" className="elements__remove-button"></button>
-                                <img src={card.link} alt={card.name} className="elements__card-image" key={card._id} />
-
-                                <div className="elements__card-description">
-                                    <p className="elements__card-name">{card.name}</p>
-                                    <div className="elements__like-container">
-                                        <button type="button" className="elements__card-icon"></button>
-                                        <p className="elements__like-count">0</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </>
                 ))}
 
             </section>
 
-
         </main>
 
-
     );
-
 }
 
 

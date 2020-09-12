@@ -5,15 +5,14 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-//import api from '../utils/Api'
-
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  //const [isDeletePopupOpen, setIsDeletePopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
 
   function handleEditAvatarClick() {
@@ -28,10 +27,17 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
+    setSelectedCard({});
   }
 
 
@@ -44,7 +50,7 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
-
+        onCardClick={handleCardClick}
       />
 
       <Footer />
@@ -59,7 +65,6 @@ function App() {
         <span id="name-input-error" className="popup__input-error"></span>
         <input id="job-input" type="text" name="userJob" className="popup__input popup__input_type_job" required placeholder="Профессия" minLength="2" maxLength="200" />
         <span id="job-input-error" className="popup__input-error"></span>
-
       </PopupWithForm>
 
       <PopupWithForm
@@ -73,8 +78,6 @@ function App() {
         <span id="url-input-error" className="popup__input-error"></span>
       </PopupWithForm>
 
-
-
       <PopupWithForm
         name='popup-avatar'
         title='Обновить аватар'
@@ -85,19 +88,10 @@ function App() {
         <span id="url-error" className="popup__input-error"></span>
       </PopupWithForm>
 
-
-
-
-
-      <ImagePopup />
-
-
-
-
-
-
-
-
+      <ImagePopup
+        card={selectedCard}
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups} />
 
     </div>
   );
