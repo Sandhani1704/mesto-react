@@ -34,59 +34,59 @@ function App() {
     setIsEditAvatarPopupOpen(false);
   }
 
-    
-  return (
-    
-    <div className="page">
-        <Header />
 
-        <Main 
+  return (
+
+    <div className="page">
+      <Header />
+
+      <Main
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
-        
-        />
 
-        <Footer />
+      />
 
-        <PopupWithForm
+      <Footer />
+
+      <PopupWithForm
         name='popup-profile'
         title='Редактировать профиль'
         buttonText='Сохранить'
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-        />
+      />
 
-        <PopupWithForm
+      <PopupWithForm
         name='popup-element'
         title='Новое место'
         buttonText='Создать'
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
-        
-        />
 
-       <PopupWithForm
+      />
+
+      <PopupWithForm
         name='popup-avatar'
         title='Обновить аватар'
         buttonText='Сохранить'
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-        />
+      />
 
-        
 
-        <ImagePopup />
 
- 
+      <ImagePopup />
 
-        
 
-        
 
-        
-        
-</div>
+
+
+
+
+
+
+    </div>
   );
 }
 
