@@ -1,16 +1,16 @@
 import React from 'react';
-import { api } from '../utils/Api';
+//import { api } from '../utils/Api';
 import Card from './Card';
 import VectorButton from '../images/Vector_1.png';
 import VectorButtonAdd from '../images/Vector.png';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, initialCards }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike, onCardDelete }) {
 
     //const [userName, setUserName] = React.useState('');
     //const [userDescription, setUserDescription] = React.useState('');
     //const [userAvatar, setUserAvatar] = React.useState('');
-    const [cards, setCards] = React.useState([]);
+    //const [cards, setCards] = React.useState([]);
 
     const currentUser = React.useContext(CurrentUserContext);
 
@@ -27,39 +27,6 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, initialCar
  
      }, []);*/
 
-    function handleCardLike(card) {
-        // Снова проверяем, есть ли уже лайк на этой карточке
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-        // Отправляем запрос в API и получаем обновлённые данные карточки
-        api.putLike(card._id, !isLiked).then((newCard) => {
-            // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-            const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-            // Обновляем стейт
-            setCards(newCards);
-        });
-    }
-
-    const handleCardDelete = (card) => {
-
-        // Отправляем запрос в API и получаем обновлённые данные карточки
-        api.deleteCard(card)
-            .then(() => {
-                const newCards = cards.filter((item) => item._id !== card);
-                setCards(newCards);
-            })
-            .catch(err => console.error(err))
-    }
-
-    React.useEffect(() => {
-        api.getInitialCards()
-            .then((initialCards) => {
-
-                setCards(initialCards);
-            })
-            .catch((error) => console.log('Ошибка запроса - ' + error))
-
-    }, []);
 
     return (
 
@@ -87,8 +54,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, initialCar
                     <Card key={card._id}
                         onCardClick={onCardClick}
                         card={card}
-                        onCardLike={handleCardLike}
-                        onCardDelete={handleCardDelete}
+                        onCardLike={onCardLike}
+                        onCardDelete={onCardDelete}
                     />
 
                 ))}
