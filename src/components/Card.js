@@ -5,7 +5,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
-    function handleCardClick() {
+    function handleClick() {
         onCardClick(card)
     }
 
@@ -37,7 +37,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
             <div className="elements__card">
                 <button type="button" className={cardDeleteButtonClassName} onClick={handleCardDelete}></button>
 
-                <img src={card.link} alt={card.name} onClick={handleCardClick} className="elements__card-image" />
+                <img src={card.link} alt={card.name} onClick={handleClick} className="elements__card-image" />
 
                 <div className="elements__card-description">
                     <p className="elements__card-name">{card.name}</p>

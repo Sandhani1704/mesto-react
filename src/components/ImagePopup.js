@@ -1,11 +1,11 @@
 import React from 'react';
 import closeIcon from '../images/Close_Icon.svg';
 
-function ImagePopup({ onClose, card }) {
+function ImagePopup({ onClose, card, isOpen }) {
 
   return (
 
-    <section className={`popup popup-image ${card && 'popup_opened'}`} >
+    <section className={`popup popup-image ${isOpen && 'popup_opened'}`} >
       <div className="popup__overlay popup-image__overlay"></div>
       <div className="popup-image__cover">
         <img src={card.link} alt={card.name} className="popup-image__image" />

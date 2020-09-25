@@ -7,25 +7,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike, onCardDelete }) {
 
-    //const [userName, setUserName] = React.useState('');
-    //const [userDescription, setUserDescription] = React.useState('');
-    //const [userAvatar, setUserAvatar] = React.useState('');
-    //const [cards, setCards] = React.useState([]);
-
     const currentUser = React.useContext(CurrentUserContext);
-
-
-    /* React.useEffect(() => {
-         Promise.all([api.getUserInfo(), api.getInitialCards()])
-             .then(([userInfo, initialCards]) => {
-                 setUserName(userInfo.name);
-                 setUserDescription(userInfo.about);
-                 setUserAvatar(userInfo.avatar);
-                 setCards(initialCards);
-             })
-             .catch((error) => console.log('Ошибка запроса - ' + error))
- 
-     }, []);*/
 
 
     return (

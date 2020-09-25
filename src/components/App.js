@@ -15,7 +15,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [currentUser, setСurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
@@ -35,20 +36,23 @@ function App() {
     api.setUserInfo({ name, about })
       .then((userInfo) => {
         setСurrentUser(userInfo);
+        closeAllPopups()
       })
       .catch(err => console.error(err))
 
-    closeAllPopups()
+
   }
 
   function handleUpdateAvatar({ avatar }) {
     api.setUserAvatar({ avatar })
       .then((userInfo) => {
         setСurrentUser(userInfo);
-      })
+        closeAllPopups()
+      }
+      )
       .catch(err => console.error(err))
 
-    closeAllPopups()
+
   }
 
 
@@ -82,19 +86,19 @@ function App() {
       .then(() => {
         const newCards = cards.filter((item) => item._id !== selectedCard._id);
         setCards(newCards);
+        closeAllPopups();
       })
       .catch((error) => console.log('Ошибка удаления карточки : ', error))
-    closeAllPopups();
+
   }
 
   function handleAddPlaceSubmit({ name, link, alt }) {
     api.addCard({ name, link, alt })
       .then((newCard) => {
-        setCards([...cards, newCard]);
+        setCards([newCard, ...cards]);
+        closeAllPopups();
       })
       .catch((error) => console.log('Ошибка запроса - ' + error))
-
-    closeAllPopups();
   }
 
 
@@ -115,7 +119,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard({});
+    setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false)
   }
 
@@ -124,6 +129,10 @@ function App() {
     setIsConfirmPopupOpen(true);
   }
 
+  const handleCardClick = (card) => {
+    setSelectedCard(card)
+    setIsImagePopupOpen(true);
+  }
 
   return (
 
@@ -135,7 +144,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
-          onCardClick={setSelectedCard}
+          onCardClick={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardConfirm}
@@ -152,6 +161,7 @@ function App() {
 
         <ImagePopup
           card={selectedCard}
+          isOpen={isImagePopupOpen}
           onClose={closeAllPopups} />
 
         <ConfirmPopup
