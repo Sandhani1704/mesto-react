@@ -20,6 +20,7 @@ function App() {
   const [currentUser, setСurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
 
   React.useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
   }, []);
 
   function handleUpdateUser({ name, about }) {
+    setIsLoading(true)
     api.setUserInfo({ name, about })
       .then((userInfo) => {
         setСurrentUser(userInfo);
@@ -44,6 +46,7 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setIsLoading(true)
     api.setUserAvatar({ avatar })
       .then((userInfo) => {
         setСurrentUser(userInfo);
@@ -81,6 +84,7 @@ function App() {
 
 
   const handleCardDelete = () => {
+    //setIsLoading(true)
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.deleteCard(selectedCard._id)
       .then(() => {
@@ -93,6 +97,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit({ name, link, alt }) {
+    setIsLoading(true)
     api.addCard({ name, link, alt })
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -122,11 +127,13 @@ function App() {
     setSelectedCard({});
     setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false)
+    setIsLoading(false)
   }
 
   const handleCardConfirm = (card) => {
     setSelectedCard(card);
     setIsConfirmPopupOpen(true);
+    
   }
 
   const handleCardClick = (card) => {
@@ -153,11 +160,23 @@ function App() {
 
         <Footer />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <EditProfilePopup 
+        isOpen={isEditProfilePopupOpen} 
+        onClose={closeAllPopups} 
+        onUpdateUser={handleUpdateUser} 
+        buttonText={isLoading ? 'Сохранение...' : 'Сохранить'}/>
 
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCards={handleAddPlaceSubmit} />
+        <AddPlacePopup 
+        isOpen={isAddPlacePopupOpen} 
+        onClose={closeAllPopups} 
+        onAddCards={handleAddPlaceSubmit} 
+        buttonText={isLoading ? 'Сохранение...' : 'Создать'}/>
 
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+        <EditAvatarPopup 
+        isOpen={isEditAvatarPopupOpen} 
+        onClose={closeAllPopups} 
+        onUpdateAvatar={handleUpdateAvatar} 
+        buttonText={isLoading ? 'Сохранение...' : 'Сохранить'}/>
 
         <ImagePopup
           card={selectedCard}
@@ -168,6 +187,7 @@ function App() {
           onConfirm={handleCardDelete}
           onClose={closeAllPopups}
           isOpen={isConfirmPopupOpen}
+          buttonText={isLoading ? 'Сохранение...' : 'Да'}
         />
 
       </CurrentUserContext.Provider>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PopupWithForm from './PopupWithForm';
 
-function ConfirmPopup({ onConfirm, isOpen, onClose }) {
+function ConfirmPopup({ onConfirm, isOpen, onClose, buttonText }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -11,11 +11,13 @@ function ConfirmPopup({ onConfirm, isOpen, onClose }) {
     return (
         <PopupWithForm name='popup-delete'
             title='Вы уверены?'
-            buttonText='Да'
+            buttonText={buttonText}
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
-        />
+        >
+        <button type="submit" className="popup__button">{buttonText}</button>
+        </PopupWithForm>
     );
 }
 

@@ -1,30 +1,45 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddCards }) {
-    const [namePlace, setNamePlace] = React.useState('');
-    const [link, setLink] = React.useState('');
+function AddPlacePopup({ isOpen, onClose, onAddCards, buttonText }) {
+
+    const [inputValue, setInputValue] = React.useState({ name: "", link: "" })
+    const [isValid, setIsValid] = React.useState({ name: false, link: false })
+    const [validationMessage, setIsValidationMessage] = React.useState({ name: "", link: "" })
+
+
+    function handleInputChange(event) {
+        const { name, value } = event.target
+        setInputValue({
+            ...inputValue,
+            [name]: value
+        })
+        setIsValid({
+            ...isValid,
+            [name]: event.target.validity.valid
+        })
+        setIsValidationMessage({
+            ...validationMessage,
+            [name]: event.target.validationMessage
+        })
+
+    }
 
     React.useEffect(() => {
-        setNamePlace('');
-        setLink('');
-    }, [onClose]);
+        setInputValue({ name: "", link: "" });
+        setIsValidationMessage({ name: "", link: "" })
+        setIsValid({ name: false, link: false })
 
+    }, [isOpen])
 
-    function handleInputNamePlaceChange(e) {
-        setNamePlace(e.target.value);
-    }
-
-    function handleInputLinkChange(e) {
-        setLink(e.target.value);
-    }
+    const isSubmitDisabled = Object.values(isValid).every(Boolean)
 
     function handleSubmit(e) {
         e.preventDefault();
 
         onAddCards({
-            name: namePlace,
-            link: link
+            name: inputValue.name,
+            link: inputValue.link
         });
     }
 
@@ -33,14 +48,33 @@ function AddPlacePopup({ isOpen, onClose, onAddCards }) {
         <PopupWithForm
             name='popup-element'
             title='Новое место'
-            buttonText='Создать'
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}>
-            <input value={namePlace} onChange={handleInputNamePlaceChange} id="title-input" type="text" name="name" className="popup__input popup-element__input_type_title" required placeholder="Название" minLength="1" maxLength="30" />
-            <span id="title-input-error" className="popup__input-error"></span>
-            <input value={link} onChange={handleInputLinkChange} id="url-input" type="url" name="link" className="popup__input popup-element__input_type_link-img" required placeholder="Ссылка на картинку" />
-            <span id="url-input-error" className="popup__input-error"></span>
+            <input value={inputValue.name}
+                onChange={handleInputChange}
+                id="title-input" type="text" name="name"
+                className={`popup__input popup-element__input_type_title ${!isValid.name && 'popup__input_type_error'}`}
+                required minLength="1" maxLength="30"
+                placeholder="Название" />
+            <span id="title-input-error"
+                className={`popup__input-error ${!isValid.name && 'popup__input-error_active'}`}
+            >
+                {validationMessage.name}
+            </span>
+            <input value={inputValue.link}
+                onChange={handleInputChange}
+                id="url-input"
+                type="url" name="link"
+                className={`popup__input popup-element__input_type_link-img ${!isValid.link && 'popup__input_type_error'}`}
+                required
+                placeholder="Ссылка на картинку" />
+            <span id="url-input-error"
+                className={`popup__input-error ${!isValid.link && 'popup__input-error_active'}`}>
+                {validationMessage.link}
+            </span>
+            <button type="submit" className={`popup__button ${!isSubmitDisabled && 'popup__button_inactive'}`} disabled={!isSubmitDisabled}>{buttonText}</button>
+
         </PopupWithForm>
     )
 }

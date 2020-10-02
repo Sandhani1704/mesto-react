@@ -5,25 +5,49 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
 
-function EditProfilePopup({ onClose, isOpen, onUpdateUser }) {
+function EditProfilePopup({ onClose, isOpen, onUpdateUser, buttonText }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
 
+    const [isValid, setIsValid] = React.useState({ name: false, about: false })
+    const [validationMessage, setIsValidationMessage] = React.useState({ name: "", about: "" })
+
+    function handleInputNameChange(event) {
+        const { name, value } = event.target
+        setName(value);
+        setIsValid({
+            ...isValid,
+            [name]: event.target.validity.valid
+        })
+        setIsValidationMessage({
+            ...validationMessage,
+            [name]: event.target.validationMessage
+        })
+    }
+
+    function handleInputDescriptionChange(event) {
+        const { name, value } = event.target
+        setDescription(value);
+        setIsValid({
+            ...isValid,
+            [name]: event.target.validity.valid
+        })
+        setIsValidationMessage({
+            ...validationMessage,
+            [name]: event.target.validationMessage
+        })
+    }
+
+    const isSubmitDisabled = Object.values(isValid).every(Boolean)
+
     React.useEffect(() => {
         setName(currentUser.name || '');
         setDescription(currentUser.about || '');
-    }, [currentUser, onClose]);
-
-    function handleInputNameChange(e) {
-        setName(e.target.value);
-    }
-
-    function handleInputDescriptionChange(e) {
-        setDescription(e.target.value);
-    }
+        setIsValid({ name: true, about: true })
+    }, [isOpen, currentUser]);
 
     function handleSubmit(e) {
         // Запрещаем браузеру переходить по адресу формы
@@ -42,14 +66,26 @@ function EditProfilePopup({ onClose, isOpen, onUpdateUser }) {
         <PopupWithForm
             name='popup-profile'
             title='Редактировать профиль'
-            buttonText='Сохранить'
+            buttonText={buttonText}
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}>
-            <input value={name} onChange={handleInputNameChange} id="name-input" type="text" name="userName" className="popup__input popup__input_type_name" required placeholder="Имя" minLength="2" maxLength="40" />
-            <span id="name-input-error" className="popup__input-error"></span>
-            <input value={description} onChange={handleInputDescriptionChange} id="job-input" type="text" name="userJob" className="popup__input popup__input_type_job" required placeholder="Профессия" minLength="2" maxLength="200" />
-            <span id="job-input-error" className="popup__input-error"></span>
+            <input onChange={handleInputNameChange}
+                value={name} id="name-input" type="text" name="name"
+                className={`popup__input popup__input_type_name ${!isValid.name && 'popup__input_type_error'}`}
+                required placeholder="Имя" minLength="2" maxLength="40" />
+            <span id="name-input-error"
+                className={`popup__input-error ${!isValid.name && 'popup__input-error_active'}`}>
+                {validationMessage.name}</span>
+            <input onChange={handleInputDescriptionChange}
+                value={description} id="job-input" type="text" name="about"
+                className={`popup__input popup__input_type_job ${!isValid.about && 'popup__input_type_error'}`}
+                required placeholder="Профессия" minLength="2" maxLength="200" />
+            <span id="job-input-error"
+                className={`popup__input-error ${!isValid.about && 'popup__input-error_active'}`}>
+                {validationMessage.about}</span>
+            <button type="submit" className={`popup__button ${!isSubmitDisabled && 'popup__button_inactive'}`}
+                disabled={!isSubmitDisabled}>{buttonText}</button>
         </PopupWithForm>
 
 
