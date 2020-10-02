@@ -9,4 +9,6 @@
  Используемые технологии: HTML, CSS, JS, React.
  
  ### Для запуска проекта npm start. 
+
+ * [Ссылка на проект](https://sandhani1704.github.io/mesto-react/) 
  
